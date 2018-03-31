@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <title>JS30 - Stripe Follow Along Dropdown</title>    
+     <link rel="stylesheet" href="style-menu.css">
+</head>
+ 
+<body>
+  <h2>Cool</h2>
+<nav class="top"  role="navigation" aria-label="Main menu">
+  <div class="dropdownBackground">
+    <span class="arrow"></span>
+  </div>
+ 
+  <ul class="cool"  role="menubar" aria-hidden="false">
+    <li role="menuitem" aria-haspopup="true">
+      <a href="#">About Me</a>
+      <ul class="dropdown dropdown1">
+        <li class="bio" role="menuitem"><a>JavaScript</a>
+        </li>
+        <li role="menuitem" >
+          <a>CSS</a>
+        </li>
+      </ul>
+    </li>
+    <li role="menuitem" aria-haspopup="true" >
+      <a href="#">Courses</a>
+      <ul class="dropdown courses">
+        <li tabindex="1">
+          <span class="code">RFB</span>
+          <a href="https://ReactForBeginners.com">React For Beginners</a>
+        </li>
+        <li tabindex="2">
+          <span class="code">ES6</span>
+          <a href="https://ES6.io">ES6 For Everyone</a>
+        </li>
+        <li tabindex="3">
+          <span class="code">STPU</span>
+          <a href="https://SublimeTextBook.com">Sublime Text Power User</a>
+        </li>
+        
+      </ul>
+    </li>
+    <li>
+      <a href="#">Other Links</a>
+      <ul class="dropdown dropdown3">
+        <li><a class="button" href="https://twitter.com/wesbos" tabindex="-1">Twiter</a></li>
+        <li><a class="button" href="https://facebook.com/wesbos.developer" tabindex="-1">Facebook</a></li>
+        <li><a class="button" href="http://wesbos.com" tabindex="-1">Blog</a></li>
+        <li><a class="button" href="http://wesbos.com/courses" tabindex="-1">Course Catalog</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+   
+    <script>
+      const triggers = document.querySelectorAll('.cool > li');
+const background = document.querySelector('.dropdownBackground');
+const nav = document.querySelector('.top');
+ 
+function handleEnter() {
+  this.classList.add('trigger-enter');
+  setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+  background.classList.add('open');
+   
+  const dropdown = this.querySelector('.dropdown');
+  const dropdownCoords = dropdown.getBoundingClientRect();
+  const navCoords = nav.getBoundingClientRect();
+  const coords = {
+    height: dropdownCoords.height,
+    width: dropdownCoords.width,
+    top: dropdownCoords.top - navCoords.top,
+    left: dropdownCoords.left - navCoords.left
+  };
+   
+  background.style.setProperty('width', `${coords.width}px`);
+  background.style.setProperty('height', `${coords.height}px`);
+  background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
+}
+ 
+function handleLeave() {
+  this.classList.remove('trigger-enter', 'trigger-enter-active');
+  background.classList.remove('open');
+}
+ 
+triggers.forEach(trigger => trigger.addEventListener('mouseenter', handleEnter));
+triggers.forEach(trigger => trigger.addEventListener('mouseleave', handleLeave));
+triggers.forEach(trigger => trigger.addEventListener('keyup', function() {
+      if (event.keyCode == 9) {
+          this.classList.add('trigger-enter');
+           setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+            background.classList.add('open');
+   
+  const dropdown = this.querySelector('.dropdown');
+  const dropdownCoords = dropdown.getBoundingClientRect();
+  const navCoords = nav.getBoundingClientRect();
+  const coords = {
+    height: dropdownCoords.height,
+    width: dropdownCoords.width,
+    top: dropdownCoords.top - navCoords.top,
+    left: dropdownCoords.left - navCoords.left
+  };
+   
+  background.style.setProperty('width', `${coords.width}px`);
+  background.style.setProperty('height', `${coords.height}px`);
+  background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
+      }
+        var li = $('li');
+var liSelected;
+$(window).keydown(function(e){
+    if(e.which === 40){
+        if(liSelected){
+            liSelected.removeClass('selected');
+            next = liSelected.next();
+            if(next.length > 0){
+                liSelected = next.addClass('selected');
+            }else{
+                liSelected = li.eq(0).addClass('selected');
+            }
+        }else{
+            liSelected = li.eq(0).addClass('selected');
+        }
+    }else if(e.which === 38){
+        if(liSelected){
+            liSelected.removeClass('selected');
+            next = liSelected.prev();
+            if(next.length > 0){
+                liSelected = next.addClass('selected');
+            }else{
+                liSelected = li.last().addClass('selected');
+            }
+        }else{
+            liSelected = li.last().addClass('selected');
+        }
+    }
+});
+  }));
+triggers.forEach(trigger => trigger.addEventListener('keydown', function() {
+      if (event.keyCode == 9) {
+        this.classList.remove('trigger-enter', 'trigger-enter-active');
+  background.classList.remove('open');
+      }
+  }));
+// $('li').keydown(function () {
+//     // $(this).removeClass()
+//     $(this).next().focus().addClass('active');
+// });
+// $('li').focus();
+    </script>
+ 
+</body>
+</html>
