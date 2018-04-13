@@ -220,7 +220,7 @@
 
             if (e.keyCode === TAB) {
                 // Focus the top-level navigation item again to enable navigation between tabs
-                // e.focus();
+                rootEl.focus();
                 self.startCloseTimeout();
             } else if (e.keyCode === ARROW_UP) {
                 // Prevent scrolling
@@ -418,28 +418,28 @@
             }
         },
 
-        globalNavDropdowns.prototype.openDropdown = function (e, option) {
+        globalNavDropdowns.prototype.openDropdown = function (rootEl, option) {
             var t = this;
-            if (this.activeDropdown === e) return;
+            if (this.activeDropdown === rootEl) return;
             this.container.classList.add("overlayActive");
             this.container.classList.add("dropdownActive");
-            this.activeDropdown = e,
-                console.log("under", e);
+            this.activeDropdown = rootEl;
             // Highlight Menu item
 
-            this.dropdownRoots.forEach(function (e, t) {
-                    e.classList.remove("active")
+            this.dropdownRoots.forEach(function (rootEl, t) {
+                    console.log("dproooot", rootEl);
+                    rootEl.classList.remove("active")
                 }),
 
-                e.classList.add("active");
+                rootEl.classList.add("active");
             // show correct section
 
-            var n = e.getAttribute("data-dropdown"),
+            var n = rootEl.getAttribute("data-dropdown"),
                 r = "left",
                 i, s, o;
 
             this.dropdownSections.forEach(function (e) {
-                console.log("dpsections", e);
+                console.log('dpsection', rootEl)
                 e.el.classList.remove("active");
                 e.el.classList.remove("left");
                 e.el.classList.remove("right");
@@ -451,8 +451,7 @@
                     o = e.content;
 
                     if (option && option.keyboardNavigation) {
-                        console.log(e);
-                        t.registerArrowKeyNavigation(e, e.el);
+                        t.registerArrowKeyNavigation(rootEl, e.el);
                     }
                 } else {
                     e.el.classList.add(r)
@@ -464,7 +463,7 @@
                 a = 400,
                 f = i / u,
                 l = s / a,
-                c = e.getBoundingClientRect(),
+                c = rootEl.getBoundingClientRect(),
                 h = c.left + c.width / 2 - i / 2;
             h = Math.round(Math.max(h, 10)),
                 clearTimeout(this.disableTransitionTimeout),
